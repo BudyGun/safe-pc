@@ -90,7 +90,7 @@ sudo mount /dev/mapper/disk .secret/
 sudo umount .secret
 sudo cryptsetup luksClose disk
 ```
-![alt text](https://github.com/BudyGun/safe-pc/blob/main/images/8.png)   
+
 
 
 
