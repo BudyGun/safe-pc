@@ -36,6 +36,11 @@
 ```
 sudo adduser encrypt-home crypto
 ```
+![alt text](https://github.com/BudyGun/uyazvimost-pc/blob/main/images/1.png)   
+
+Захожу под созданным пользователем, создаю два тестовых файла.   
+Проверяю шифрование. Данные файлы не видны под другим пользователем.
+![alt text](https://github.com/BudyGun/uyazvimost-pc/blob/main/images/2.png)   
 
 
 
@@ -46,6 +51,47 @@ sudo adduser encrypt-home crypto
 3. Зашифруйте созданный раздел с помощью LUKS.
 
 *В качестве ответа пришлите снимки экрана с поэтапным выполнением задания.*
+
+### Решение 2    
+
+Устанавливаю LUKS
+```
+sudo apt install cryptsetup
+```
+![alt text](https://github.com/BudyGun/uyazvimost-pc/blob/main/images/4.png)   
+
+Создаю раздел 100Mb c помощью утилиты fdisk и шифрую его:
+```
+sudo cryptsetup -y -v --type luks2 luksFormat /dev/sdb1
+```
+![alt text](https://github.com/BudyGun/uyazvimost-pc/blob/main/images/5.png)
+
+Монтирую созданный раздел:
+```
+sudo cryptsetup luksOpen /dev/sdb1 disk
+ls /dev/mapper/disk
+```
+Форматирую созданный раздел:
+```
+sudo dd if=/dev/zero of=/dev/mapper/disk
+sudo mkfs.ext4 /dev/mapper/disk
+```
+![alt text](https://github.com/BudyGun/uyazvimost-pc/blob/main/images/6.png)    
+
+Создаю скрытую директорию и подключаю к ней диск:
+```
+mkdir .secret
+sudo mount /dev/mapper/disk .secret/
+```
+![alt text](https://github.com/BudyGun/uyazvimost-pc/blob/main/images/7.png)     
+
+Завершаю работу:
+```
+sudo umount .secret
+sudo cryptsetup luksClose disk
+```
+![alt text](https://github.com/BudyGun/uyazvimost-pc/blob/main/images/8.png)   
+
 
 
 ## Дополнительные задания (со звёздочкой*)
